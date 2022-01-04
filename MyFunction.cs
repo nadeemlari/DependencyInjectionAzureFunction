@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 using DependencyInjectionAzureFunction.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -11,10 +12,12 @@ namespace DependencyInjectionAzureFunction;
 public class MyFunction
 {
     private readonly IMessageProcessor _processor;
+    private readonly ServiceBusClient _serviceBusClient;
 
-    public MyFunction(IMessageProcessor processor)
+    public MyFunction(IMessageProcessor processor, ServiceBusClient serviceBusClient)
     {
         _processor = processor;
+        _serviceBusClient = serviceBusClient;
     }
     [FunctionName("MyFunction")]
     public async Task<IActionResult> Run(
@@ -23,6 +26,8 @@ public class MyFunction
     {
 
         await _processor.ProcessAsync();
+        var sender = _serviceBusClient.CreateSender("test");
+        await sender.SendMessageAsync(new ServiceBusMessage("this is from azure function"));
         return new OkObjectResult("Executed Successfully");
     }
 }
