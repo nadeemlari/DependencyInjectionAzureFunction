@@ -4,7 +4,7 @@
         <AzureFunctionsVersion>V4</AzureFunctionsVersion>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Azure.Identity" Version="1.5.0" />
+        <PackageReference Include="Azure.Identity" Version="1.10.2" />
         <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.5.1" />
         <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
         <PackageReference Include="Microsoft.Extensions.Azure" Version="1.1.1" />
